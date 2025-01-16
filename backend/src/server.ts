@@ -6,6 +6,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 
+import authRoutes from './routes/auth.routes'
+
 dotenv.config();
 
 const app = express();
@@ -62,6 +64,8 @@ const limiter = rateLimit({
   max: 100, // limit each IP to 100 requests per windowMs
 });
 app.use(limiter);
+
+app.use("/api/auth", authRoutes)
 
 // Basic route
 app.get("/", (req, res) => {
