@@ -58,20 +58,45 @@ app.use(helmet());
  */
 app.use(morgan("dev"));
 
-// Rate limiting to prevent abuse
+// ==============================
+// 🚀 Security: Rate Limiting Middleware
+// ==============================
+
+// Import `express-rate-limit` to prevent excessive requests from the same IP
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000, // 15 minutes (time window for rate limit)
+  max: 100, // Limit each IP to 100 requests per 15 minutes
 });
+
+// Apply the rate limiter to all incoming requests
+// Helps prevent DDoS attacks and abuse
 app.use(limiter);
 
-app.use("/api/auth", authRoutes)
+// ==============================
+// 📌 Route Registration
+// ==============================
 
-// Basic route
+// Mount authentication routes under `/api/auth`
+// Example: `/api/auth/register`, `/api/auth/login`, etc.
+app.use("/api/auth", authRoutes);
+
+// ==============================
+// 🌍 Basic Health Check Route
+// ==============================
+
+// Simple GET route to confirm the API is running
+// Example: Visiting `http://localhost:3001/` should return { "message": "API is running!" }
 app.get("/", (req, res) => {
   res.json({ message: "API is running!" });
 });
 
-// Start server
+// ==============================
+// 🎯 Start the Express Server
+// ==============================
+
+// Set the port dynamically from environment variables, or default to 3001
 const PORT = process.env.PORT || 3001;
+
+// Start the server and listen for incoming requests
+// Logs a message in the console to confirm the server is running
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
