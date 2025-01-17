@@ -228,3 +228,13 @@ export const logout = async (req: Request, res: Response) => {
 | `GET` | `/api/protected` | Example protected route | `authMiddleware` |
 
 ---
+
+
+✅ What You Mastered
+TypeScript Express Backend
+JWT Authentication & Secure Cookies
+User Registration, Login, and Deletion
+Redux Toolkit for Authentication Management
+Fetching and Managing Users in React
+Debugging CORS & API Route Issues
+Proper Backend & Frontend Integration
