@@ -20,7 +20,11 @@ const app = express();
  */
 
 // Enable Cross-Origin Resource Sharing (CORS) to allow frontend requests
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5174", // ✅ Must match frontend URL
+  credentials: true, // ✅ Allow cookies
+  methods: ["GET", "POST", "PUT", "DELETE"],
+}));
 
 /**
  * Parse incoming JSON requests.

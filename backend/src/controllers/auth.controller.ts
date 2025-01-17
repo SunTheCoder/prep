@@ -72,7 +72,11 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
 
     // Secure cookie storage
     res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "strict" });
-    res.json({ message: "Login successful", token });
+    res.json({ 
+                message: "Login successful", 
+                user,
+                token 
+            });
   } catch (error) {
     console.error("Error logging in:", error);
     res.status(500).json({ message: "Internal Server Error" });
