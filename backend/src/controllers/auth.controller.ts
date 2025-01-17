@@ -78,7 +78,6 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
                 token 
             });
   } catch (error) {
-    console.error("Error logging in:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    next(error)
   }
 };

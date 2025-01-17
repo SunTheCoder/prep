@@ -7,6 +7,8 @@ import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 
 import authRoutes from './routes/auth.routes'
+import { errorHandler } from "./middleware/errorHandler"; // Import error handler
+
 
 dotenv.config();
 
@@ -21,7 +23,7 @@ const app = express();
 
 // Enable Cross-Origin Resource Sharing (CORS) to allow frontend requests
 app.use(cors({
-  origin: "http://localhost:5174", // ✅ Must match frontend URL
+  origin: "http://localhost:5173", // ✅ Must match frontend URL
   credentials: true, // ✅ Allow cookies
   methods: ["GET", "POST", "PUT", "DELETE"],
 }));
@@ -93,6 +95,9 @@ app.use("/api/auth", authRoutes);
 app.get("/", (req, res) => {
   res.json({ message: "API is running!" });
 });
+
+// Global Error Handling Middleware (must be last)
+app.use(errorHandler);
 
 // ==============================
 // 🎯 Start the Express Server
