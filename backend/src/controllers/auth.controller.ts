@@ -86,3 +86,36 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     next(error)
   }
 };
+
+export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const users = await prisma.user.findMany({
+      select: { id: true, name: true, email: true, createdAt: true}
+    })
+
+    res.json(users)
+  } catch (error) {
+    console.error("Error fetching users")
+    res.status(500).json({message: "Internal Server Error"})
+  }
+}
+
+export const deleteUser = async (req: Request, res: Response): Promise<void> => {
+   try {
+      const { id } = req.params
+
+      // 🔹 Check if the user exists
+      const user = await prisma.user.findUnique({ where: {id}});
+      if (!user) {
+        res.status(400).json({message: 'User not found'});
+        return
+      }
+
+      await prisma.user.delete({where: {id}})
+
+      res.json({message: "User deleted successfully", userID: id})
+   } catch (error) {
+      console.error("Delete user error!")
+      res.status(500).json({message: "Internal Server Error"})
+   }
+}

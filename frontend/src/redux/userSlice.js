@@ -34,6 +34,22 @@ const authSlice = createSlice({
     // 🔹 Define Redux reducers that modify the state based on dispatched actions
     reducers: {
         // 🔹 Handles login request start (sets loading to true)
+        // 🔹 Register reducers
+        registerStart: (state) => {
+            state.auth.loading = true;
+            state.auth.error = null;
+        },
+        registerSuccess: (state, action) => {
+            state.auth.loading = false;
+            state.auth.user = action.payload;
+
+            // 🔥 Save updated auth state to localStorage after successful registration
+            localStorage.setItem("authState", JSON.stringify(state));
+        },
+        registerFailure: (state, action) => {
+            state.auth.loading = false;
+            state.auth.error = action.payload;
+        },
         loginStart: (state) => {
             state.auth.loading = true;  // Set loading state to true during login request
             state.auth.error = null;    // Reset any previous error messages
@@ -66,7 +82,7 @@ const authSlice = createSlice({
 });
 
 // 🔹 Exporting action creators so they can be dispatched in components
-export const { loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
+export const { registerStart, registerSuccess, registerFailure, loginStart, loginSuccess, loginFailure, logout } = authSlice.actions;
 
 // 🔹 Exporting the reducer so it can be added to the Redux store
 export default authSlice.reducer;

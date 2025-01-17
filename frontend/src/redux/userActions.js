@@ -1,9 +1,32 @@
 // 🔹 Import Redux actions from the user slice to update authentication state
-import { loginStart, loginSuccess, loginFailure, logout } from "./userSlice";
+import { registerStart, registerSuccess, registerFailure, loginStart, loginSuccess, loginFailure, logout } from "./userSlice";
 
 // 🔹 Define the API base URL for authentication requests
 const API_URL = "http://localhost:3001/api/auth"; // Update with backend URL
 
+
+export const registerUser = (name, email, password) => async (dispatch) => {
+    dispatch(registerStart())
+    try {
+
+        const response = await fetch(`${API_URL}/register`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json" },
+            body: JSON.stringify({name, email, password}),
+            credentials: "include"
+
+        })
+
+        const data = await response.json()
+        console.log("Register:", data)
+        if (!response.ok) throw new Error(data.message || "Registration Failed")
+
+        dispatch(registerSuccess(data))
+        // dispatch(loginSuccess())
+    } catch (error) {
+        dispatch(registerFailure(error.message))
+    }
+}
 /**
  * 🔹 Login Action (Asynchronous Thunk)
  * This function handles user login by sending email & password to the backend.
