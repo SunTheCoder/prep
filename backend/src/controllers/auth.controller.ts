@@ -74,7 +74,12 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "strict" });
     res.json({ 
                 message: "Login successful", 
-                user,
+                user: {
+                  id: user.id,
+                  name: user.name,
+                  email: user.email,
+                  createdAt: user.createdAt
+                },
                 token 
             });
   } catch (error) {

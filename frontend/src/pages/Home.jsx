@@ -13,6 +13,10 @@ const Home = () => {
     navigate("/login"); // Replace with your target route
   };
 
+  const handleLogout = () => {
+    dispatch(logout())
+  }
+
 
   return (
     <div>
@@ -26,6 +30,8 @@ const Home = () => {
         <h2>Please log in.</h2>
         
         <button type="button" onClick={handleNavigate}>Login</button>
+        
+
         </>
       )}
     </div>

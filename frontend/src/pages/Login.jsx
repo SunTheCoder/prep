@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { login } from "../redux/userActions";
+import { login, logoutUser } from "../redux/userActions";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -34,6 +34,8 @@ const Login = () => {
                 <button type="submit" disabled={loading}>
                     {loading ? "Logging in..." : "Login"}
                 </button>
+                <button onClick={() => dispatch(logoutUser())}>Logout</button>
+                
             </form>
             {error && <p style={{ color: "red" }}>{error}</p>}
         </div>

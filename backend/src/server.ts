@@ -86,6 +86,8 @@ app.use(limiter);
 // Example: `/api/auth/register`, `/api/auth/login`, etc.
 app.use("/api/auth", authRoutes);
 
+// Global Error Handling Middleware (must be last)
+app.use(errorHandler);
 // ==============================
 // 🌍 Basic Health Check Route
 // ==============================
@@ -96,8 +98,7 @@ app.get("/", (req, res) => {
   res.json({ message: "API is running!" });
 });
 
-// Global Error Handling Middleware (must be last)
-app.use(errorHandler);
+
 
 // ==============================
 // 🎯 Start the Express Server
